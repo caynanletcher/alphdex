@@ -1,4 +1,4 @@
-from django.contrib.auth.models import Set
+from sets.models import Set
 from rest_framework import serializers
 
 

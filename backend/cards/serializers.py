@@ -1,4 +1,4 @@
-from django.contrib.auth.models import Card
+from cards.models import Card
 from rest_framework import serializers
 
 
