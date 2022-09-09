@@ -9,4 +9,4 @@ class CardSerializer(serializers.HyperlinkedModelSerializer):
 
   class Meta:
     model = Card
-    fields = ['name', 'set', 'number']
+    fields = ['name', 'number', 'set']
