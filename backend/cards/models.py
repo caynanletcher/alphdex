@@ -1,3 +1,4 @@
+from asyncio import constants
 from django.db import models
 from sets.models import Set
 
@@ -8,9 +9,11 @@ class Card(models.Model):
   number = models.PositiveSmallIntegerField()
 
   class Meta:
-        unique_together = ['set', 'number']
-        # TODO: have cards ordered by set, then number
-        ordering = ['number']
+    constraints = [
+      models.UniqueConstraint(fields=['name', 'number', 'set'], name='unique_name_number_set')
+    ]
+    # TODO: have cards ordered by set, then number
+    ordering = ['number']
 
   def __str__(self):
     return self.name
