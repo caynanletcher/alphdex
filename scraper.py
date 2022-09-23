@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 import time
 import environ
@@ -87,7 +88,7 @@ class Scraper:
         card_name = title.split(' - ', 1)[0]
         interim_string = title.split(' #')[1]
         card_number = interim_string.split(' – ', 1)[0]
-        print('LIMITLESS CARD: ' + card_name + '\n SET: ' + set_name + '\n NUMBER: ' + card_number)
+        print(f'Card #{card_number} found: \n  Name: {card_name} \n  Set: {set_name} \n  Number: {card_number}')
         response = requests.post(CARDS_URL, json = {
           'name': card_name,
           'set': {
@@ -96,7 +97,6 @@ class Scraper:
           'number': card_number
         }, auth=(username, password))
         print(response)
-        print()
     except:
       raise Exception('Failed to scrape url')
 
@@ -116,53 +116,73 @@ class Scraper:
         print(pop_up)
     driver.quit()
 
-jklacz_urls = [ 'https://jklaczpokemon.com/1999-base-jungle/',
-                'https://jklaczpokemon.com/1999-base-fossil/',
-                'https://jklaczpokemon.com/1999-base-set/',
-                'https://jklaczpokemon.com/2000-base-team-rocket/',
-                'https://jklaczpokemon.com/2000-base-to-gym/',
-                'https://jklaczpokemon.com/e-card-decks-2/',
-                'https://jklaczpokemon.com/xy-decks/',
-                'https://jklaczpokemon.com/base-to-neo-decks-2/',
-                'https://jklaczpokemon.com/rocket-on-decks-2/',
-                'https://jklaczpokemon.com/prop-15-3/',
-                'https://jklaczpokemon.com/black-and-white-decks-2/',
-                'https://jklaczpokemon.com/xy-decks-3/',
-                'https://jklaczpokemon.com/ex-decks/',
-                'https://jklaczpokemon.com/ex-decks-2/',
-                'https://jklaczpokemon.com/dpp-decks/',
-                'https://jklaczpokemon.com/ex/',
-                'https://jklaczpokemon.com/hs/',
-                'https://jklaczpokemon.com/black-and-white/',
-                'https://jklaczpokemon.com/black-and-white-decks/',
-                'https://jklaczpokemon.com/xy-decks-1/',
-                'https://jklaczpokemon.com/xy-decks-2/',
-                'https://jklaczpokemon.com/2002-base-to-neo/',
-                'https://jklaczpokemon.com/base-to-neo-decks/',
-                'https://jklaczpokemon.com/rocket-on/',
-                'https://jklaczpokemon.com/rocket-lc-decks/',
-                'https://jklaczpokemon.com/neo-on/',
-                'https://jklaczpokemon.com/e-card/',
-                'https://jklaczpokemon.com/rocket-legendary-collection-decks/',
-                ]
-limitless_blacklist = ['BS', 'JU', 'PR', 'FO', 'B2', 'TR', 'G1', 'G2', 'N1', 'N2', 'N3', 'N4', 'LC', 'EX', 'AQ', 'SK', 'RS', 'SS', 'DR', 'MA', 'HL', 'RG', 'TRR', 'DX', 'EM', 'UF', 'DS', 'LM', 'HP', 'CG', 'DF', 'PK', 'DP', 'MT', 'SW', 'GE', 'MD', 'LA', 'SF', 'PL', 'RR', 'SV', 'AR', 'PR-NP']
+jklacz_urls = ['https://jklaczpokemon.com/1999-base-jungle/',
+              'https://jklaczpokemon.com/1999-base-fossil/',
+              'https://jklaczpokemon.com/1999-base-set/',
+              'https://jklaczpokemon.com/2000-base-team-rocket/',
+              'https://jklaczpokemon.com/2000-base-to-gym/',
+              'https://jklaczpokemon.com/e-card-decks-2/',
+              'https://jklaczpokemon.com/xy-decks/',
+              'https://jklaczpokemon.com/base-to-neo-decks-2/',
+              'https://jklaczpokemon.com/rocket-on-decks-2/',
+              'https://jklaczpokemon.com/prop-15-3/',
+              'https://jklaczpokemon.com/black-and-white-decks-2/',
+              'https://jklaczpokemon.com/xy-decks-3/',
+              'https://jklaczpokemon.com/ex-decks/',
+              'https://jklaczpokemon.com/ex-decks-2/',
+              'https://jklaczpokemon.com/dpp-decks/',
+              'https://jklaczpokemon.com/ex/',
+              'https://jklaczpokemon.com/hs/',
+              'https://jklaczpokemon.com/black-and-white/',
+              'https://jklaczpokemon.com/black-and-white-decks/',
+              'https://jklaczpokemon.com/xy-decks-1/',
+              'https://jklaczpokemon.com/xy-decks-2/',
+              'https://jklaczpokemon.com/2002-base-to-neo/',
+              'https://jklaczpokemon.com/base-to-neo-decks/',
+              'https://jklaczpokemon.com/rocket-on/',
+              'https://jklaczpokemon.com/rocket-lc-decks/',
+              'https://jklaczpokemon.com/neo-on/',
+              'https://jklaczpokemon.com/e-card/',
+              'https://jklaczpokemon.com/rocket-legendary-collection-decks/',
+              ]
+
+# Filter sets that LimitlessTCG does not have cards for
+limitless_blacklist = ['BS', 'JU', 'PR', 'FO', 'B2', 'TR', 'G1', 'G2', 'N1', 'N2', 'N3', 
+                      'N4', 'LC', 'EX', 'AQ', 'SK', 'RS', 'SS', 'DR', 'MA', 'HL', 'RG', 
+                      'TRR', 'DX', 'EM', 'UF', 'DS', 'LM', 'HP', 'CG', 'DF', 'PK', 'DP', 
+                      'MT', 'SW', 'GE', 'MD', 'LA', 'SF', 'PL', 'RR', 'SV', 'AR', 'PR-NP',
+                      'PR-DPP']
+
 scraper = Scraper()
 
-pokemon_sets = requests.get('https://api.pokemontcg.io/v2/sets').json()
+sets = requests.get('https://api.pokemontcg.io/v2/sets').json()
 
 
-for set in pokemon_sets['data']:
-  for i in range(set['total']):
-    try:
-      # I am unable to find ptcgoCode from set in the f-string, so it must be declared like so
-      if set['ptcgoCode']:
-        ptcgoCode = set['ptcgoCode']
-        if ptcgoCode in limitless_blacklist:
-          print(f'Skipping set {ptcgoCode}...')
-          break
-        scraper.scrape_limitlesstcg(f'https://limitlesstcg.com/cards/{ptcgoCode}/{i}', set['name'])
-    except:
-      print(f'Card not found in set {ptcgoCode}.')
+for set in sets['data']:
+  try:
+    ptcgoCode = set['ptcgoCode']
+    if ptcgoCode not in limitless_blacklist:
+      # Alter codes from PTCGAPI to LTCG
+      if ptcgoCode == 'PR-HS':
+        ptcgoCode = 'HSP'
+      elif ptcgoCode == 'PR-BLW':
+        ptcgoCode = 'BWP'
+      elif ptcgoCode == 'PR-XY':
+        ptcgoCode = 'XYP'
+      elif ptcgoCode == 'PR-SM':
+        ptcgoCode = 'SMP'
+      elif ptcgoCode == 'PR-SW':
+        ptcgoCode = 'SSP'
+      
+      for i in range(set['total']):
+        try:
+          scraper.scrape_limitlesstcg(f'https://limitlesstcg.com/cards/{ptcgoCode}/{i}', set['name'])
+        except:
+          print(f'Card #{i} not found in set {ptcgoCode}.')
+    else:
+      print(f'Skipping set {ptcgoCode}...')
+  except KeyError:
+    print('Set does not have a \'ptcgoCode\'.')
 
 for url in jklacz_urls:
   scraper.scrape_jklacz(url)
