@@ -11,6 +11,12 @@ class CardSerializer(serializers.HyperlinkedModelSerializer):
   class Meta:
     model = Card
     fields = ['name', 'number', 'set']
+    validators = [
+      serializers.UniqueTogetherValidator(
+        queryset=Card.objects.all(),
+        fields=['set', 'number']
+      )
+    ]
 
   def create(self, validated_data):
     set_data = validated_data.pop('set')
@@ -18,5 +24,12 @@ class CardSerializer(serializers.HyperlinkedModelSerializer):
     if not set:
       raise serializers.ValidationError({
         'set': 'Set not found.'
+      })
+    
+    card_name = validated_data.get('name')
+    card_number = validated_data.get('number')
+    if Card.objects.filter(name=card_name, number=card_number, set=set):
+      raise serializers.ValidationError({
+        'card': 'Card already exists.'
       })
     return Card.objects.create(set=set, **validated_data)
