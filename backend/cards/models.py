@@ -1,4 +1,3 @@
-from asyncio import constants
 from django.db import models
 from sets.models import Set
 
