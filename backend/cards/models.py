@@ -12,8 +12,7 @@ class Card(models.Model):
     constraints = [
       models.UniqueConstraint(fields=['name', 'number', 'set'], name='unique_name_number_set')
     ]
-    # TODO: have cards ordered by set, then number
-    ordering = ['number']
+    ordering = ['set', 'number']
 
   def __str__(self):
     return self.name
