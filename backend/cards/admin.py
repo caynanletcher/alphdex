@@ -3,6 +3,6 @@ from .models import Card
 
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
-  list_display = ['name', 'set__name', 'number']
-  list_filter = ['name', 'set__name', 'number']
+  list_display = ['name', 'set', 'number']
+  list_filter = ['set__name']
   search_fields = ['name']
