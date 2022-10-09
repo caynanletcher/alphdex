@@ -1,12 +1,13 @@
 from sets.models import Set
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from sets.serializers import SetSerializer
 
 
 class SetViewSet(viewsets.ModelViewSet):
-  """
-  API endpoint that allows users to be viewed or edited.
-  """
   queryset = Set.objects.all()
   serializer_class = SetSerializer
   permission_classes = [permissions.IsAuthenticated]
+  filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+  filterset_fields = ['name', 'code']
+  search_fields = ['name']
