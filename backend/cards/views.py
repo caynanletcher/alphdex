@@ -8,6 +8,7 @@ class CardViewSet(viewsets.ModelViewSet):
   queryset = Card.objects.all()
   serializer_class = CardSerializer
   permission_classes = [permissions.IsAuthenticated]
-  filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+  filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
   filterset_fields = ['name', 'number', 'set__name', 'set__code']
   search_fields = ['name', 'set__name']
+  ordering_fields = '__all__'

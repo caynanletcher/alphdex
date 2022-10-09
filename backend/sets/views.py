@@ -8,6 +8,7 @@ class SetViewSet(viewsets.ModelViewSet):
   queryset = Set.objects.all()
   serializer_class = SetSerializer
   permission_classes = [permissions.IsAuthenticated]
-  filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+  filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
   filterset_fields = ['name', 'code']
   search_fields = ['name']
+  ordering_fields = '__all__'

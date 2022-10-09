@@ -1,4 +1,2 @@
-backend
-- allow queries of a certain set through API
 frontend
 - send authorization on api requests
