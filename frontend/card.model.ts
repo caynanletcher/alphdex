@@ -6,3 +6,11 @@ export interface Card {
   number: number;
   set: Set;
 }
+
+export interface CardImage extends Card {
+  imageUrl: string;
+}
+
+export interface CardEntry extends CardImage {
+  isPlayed: boolean;
+}

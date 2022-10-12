@@ -1,13 +1,12 @@
 import Head from "next/head";
-import Image from "next/image";
-import ky from "ky";
+import ky from "ky-universal";
 import { GetStaticProps } from "next";
 import { Card } from "../card.model";
-import { useState } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import CardsApp from "../components/CardsApp";
 
-export default function Home({ jsonData }: { jsonData: Card[] }) {
-  const [usedCards, setUsedCards] = useState(jsonData);
-
+export default function Home({ playedCardsData }: { playedCardsData: Card[] }) {
   return (
     <div>
       <Head>
@@ -16,42 +15,25 @@ export default function Home({ jsonData }: { jsonData: Card[] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1>Welcome to Alphdex</h1>
-      </main>
-
-      <table>
-        <tbody>
-          <Image
-            src="https://images.pokemontcg.io/pl1/1.png"
-            alt=""
-            height="360px"
-            width="240px"
-          />
-        </tbody>
-      </table>
-
-      <footer>
-        <a>Alphdex created by caynan</a>
-      </footer>
+      <Header />
+      <CardsApp playedCards={playedCardsData} />
+      <Footer />
     </div>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  let jsonData;
+  let playedCardsData;
   try {
-    jsonData = await ky
-      .get(`${process.env.NEXT_PUBLIC_HOST}/api/cards/`, {
-        headers: {},
-      })
+    playedCardsData = await ky
+      .get(`${process.env.NEXT_PUBLIC_HOST}/api/cards/`)
       .json();
   } catch (err) {
     console.log(`API Error: ${err}`);
   }
   return {
     props: {
-      jsonData,
+      playedCardsData,
     },
   };
 };
