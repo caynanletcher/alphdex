@@ -1,16 +1,10 @@
 import { Set } from "./set.model";
 
 export interface Card {
-  id: string;
+  id: number;
   name: string;
   number: number;
   set: Set;
-}
-
-export interface CardImage extends Card {
-  imageUrl: string;
-}
-
-export interface CardEntry extends CardImage {
+  imageUrl?: string;
   isPlayed: boolean;
 }
