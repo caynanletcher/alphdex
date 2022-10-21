@@ -1,11 +1,11 @@
+import { Card } from "../card.model";
 import CardsEntry from "./CardsEntry";
-import { CardEntry } from "../card.model";
-const CardsTable = ({ cards }: { cards: CardEntry[] }) => {
+const CardsTable = ({ cards }: { cards: Card[] }) => {
   return (
     <table>
       <tbody>
         {cards.map((card) => (
-          <CardsEntry key={card.id} {...card} />
+          <CardsEntry key={card.id} name={card.name} imageUrl={card.imageUrl} />
         ))}
       </tbody>
     </table>

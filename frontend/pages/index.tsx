@@ -1,12 +1,15 @@
 import Head from "next/head";
 import ky from "ky-universal";
-import { GetStaticProps } from "next";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Card } from "../card.model";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import CardsApp from "../components/CardsApp";
 
-export default function Home({ playedCardsData }: { playedCardsData: Card[] }) {
+export default function Home({
+  playedCards,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  console.log(typeof playedCards);
   return (
     <div>
       <Head>
@@ -16,24 +19,18 @@ export default function Home({ playedCardsData }: { playedCardsData: Card[] }) {
       </Head>
 
       <Header />
-      <CardsApp playedCards={playedCardsData} />
+      <CardsApp playedCards={playedCards} />
       <Footer />
     </div>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  let playedCardsData;
-  try {
-    playedCardsData = await ky
-      .get(`${process.env.NEXT_PUBLIC_HOST}/api/cards/`)
-      .json();
-  } catch (err) {
-    console.log(`API Error: ${err}`);
-  }
+  const res = await ky.get(`${process.env.NEXT_PUBLIC_HOST}/api/cards/`);
+  const playedCards: Card[] = await res.json();
   return {
     props: {
-      playedCardsData,
+      playedCards,
     },
   };
 };
