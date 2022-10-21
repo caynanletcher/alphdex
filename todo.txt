@@ -1,2 +1,4 @@
+backend
+- add support for pokemon tcg archive scraping
+- change " and " in set title to " & " on POST requests
 frontend
-- send authorization on api requests
