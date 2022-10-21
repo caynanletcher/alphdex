@@ -1,4 +1,12 @@
 backend
 - add support for pokemon tcg archive scraping
 - change " and " in set title to " & " on POST requests
+
+
 frontend
+- fix "cards.map not a function" error
+- filter by playedCards in CardsApp
+- layout cards in a proper grid (flexbox?)
+---
+- implement tailwind css
+- make favicon
