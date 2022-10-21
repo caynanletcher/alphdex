@@ -1,6 +1,7 @@
 import requests
 import time
 import environ
+import re
 from bs4 import BeautifulSoup
 
 from selenium import webdriver
@@ -22,18 +23,18 @@ CARDS_URL = 'http://127.0.0.1:8000/cards/'
 class Scraper:
 
   # Urls to pages on jklaczpokemon.com that contain decklists
-  jklacz_urls = ['https://jklaczpokemon.com/1999-base-jungle/',
-                'https://jklaczpokemon.com/1999-base-fossil/',
-                'https://jklaczpokemon.com/1999-base-set/',
-                'https://jklaczpokemon.com/2000-base-team-rocket/',
-                'https://jklaczpokemon.com/2000-base-to-gym/',
-                'https://jklaczpokemon.com/e-card-decks-2/',
-                'https://jklaczpokemon.com/xy-decks/',
-                'https://jklaczpokemon.com/base-to-neo-decks-2/',
-                'https://jklaczpokemon.com/rocket-on-decks-2/',
-                'https://jklaczpokemon.com/prop-15-3/',
+  jklacz_urls = [#'https://jklaczpokemon.com/1999-base-jungle/',
+                # 'https://jklaczpokemon.com/1999-base-fossil/',
+                # 'https://jklaczpokemon.com/1999-base-set/',
+                # 'https://jklaczpokemon.com/2000-base-team-rocket/',
+                # 'https://jklaczpokemon.com/2000-base-to-gym/',
+                # 'https://jklaczpokemon.com/e-card-decks-2/',
+                # 'https://jklaczpokemon.com/xy-decks/',
+                # 'https://jklaczpokemon.com/base-to-neo-decks-2/',
+                # 'https://jklaczpokemon.com/rocket-on-decks-2/',
+                # 'https://jklaczpokemon.com/prop-15-3/',
                 'https://jklaczpokemon.com/black-and-white-decks-2/',
-                'https://jklaczpokemon.com/xy-decks-3/',
+                # 'https://jklaczpokemon.com/xy-decks-3/',
                 'https://jklaczpokemon.com/ex-decks/',
                 'https://jklaczpokemon.com/ex-decks-2/',
                 'https://jklaczpokemon.com/dpp-decks/',
@@ -43,13 +44,13 @@ class Scraper:
                 'https://jklaczpokemon.com/black-and-white-decks/',
                 'https://jklaczpokemon.com/xy-decks-1/',
                 'https://jklaczpokemon.com/xy-decks-2/',
-                'https://jklaczpokemon.com/2002-base-to-neo/',
-                'https://jklaczpokemon.com/base-to-neo-decks/',
-                'https://jklaczpokemon.com/rocket-on/',
-                'https://jklaczpokemon.com/rocket-lc-decks/',
-                'https://jklaczpokemon.com/neo-on/',
-                'https://jklaczpokemon.com/e-card/',
-                'https://jklaczpokemon.com/rocket-legendary-collection-decks/',
+                # 'https://jklaczpokemon.com/2002-base-to-neo/',
+                # 'https://jklaczpokemon.com/base-to-neo-decks/',
+                # 'https://jklaczpokemon.com/rocket-on/',
+                # 'https://jklaczpokemon.com/rocket-lc-decks/',
+                # 'https://jklaczpokemon.com/neo-on/',
+                # 'https://jklaczpokemon.com/e-card/',
+                # 'https://jklaczpokemon.com/rocket-legendary-collection-decks/',
                 ]
 
   # Sets that LimitlessTCG does not have cards for
@@ -70,6 +71,7 @@ class Scraper:
     set_name = card_name_set.split(' - ')[1]
     product_details = product.find_element(By.CLASS_NAME, "product__item-details__attributes")
     card_number = product_details.find_element(By.TAG_NAME, "span").text.split("/")[0].strip()
+    set_name = set_name.replace(" and ", " & ")
     print('CARD: ' + card_name + '\n SET: ' + set_name + '\n NUMBER: ' + card_number)
     response = requests.post(CARDS_URL, json = {
       'name': card_name,
@@ -89,6 +91,7 @@ class Scraper:
       set_name = result.find_element(By.CLASS_NAME, "search-result__subtitle").text.strip()
       card_number = result.find_element(By.PARTIAL_LINK_TEXT, "#").text.split("#")[1].strip().split('\n')[0]
       card_name = result.find_element(By.CLASS_NAME, "search-result__title").text.strip()
+      set_name = set_name.replace(" and ", " & ")
       print('RESULTS CARD: ' + card_name + '\n SET: ' + set_name + '\n NUMBER: ' + card_number)
       response = requests.post(CARDS_URL, json = {
         'name': card_name,
@@ -187,8 +190,8 @@ class Scraper:
       self.scrape_jklacz_page(url)
 
   def scrape_all(self):
-    self.scrape_limitless()
     self.scrape_jklacz()
+    # self.scrape_limitless()
 
 
 scraper = Scraper()
