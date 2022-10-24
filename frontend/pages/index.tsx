@@ -9,7 +9,7 @@ import CardsApp from "../components/CardsApp";
 export default function Home({
   playedCards,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log(typeof playedCards);
+  console.log(playedCards);
   return (
     <div>
       <Head>
@@ -19,14 +19,14 @@ export default function Home({
       </Head>
 
       <Header />
-      <CardsApp playedCards={playedCards} />
+      <CardsApp playedCards={playedCards.results} />
       <Footer />
     </div>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await ky.get(`${process.env.NEXT_PUBLIC_HOST}/api/cards/`);
+  const res = await ky(`${process.env.NEXT_PUBLIC_HOST}/api/cards/`);
   const playedCards: Card[] = await res.json();
   return {
     props: {

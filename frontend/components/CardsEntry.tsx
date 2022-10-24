@@ -10,15 +10,17 @@ const CardsEntry = ({
   return imageUrl ? (
     <>
       <td>
-        <Image src={imageUrl} alt={name} />
+        <Image src={imageUrl} alt={name} width="100px" height="100px" />
       </td>
     </>
   ) : (
     <>
       <td>
         <Image
-          src={`https://limitlesstcg.com/inc/tabletop-beta/_app/immutable/assets/cardback_int-934b66b9.png`}
+          src={`/../public/cardback.png`}
           alt={name}
+          width="100px"
+          height="100px"
         />
       </td>
     </>
