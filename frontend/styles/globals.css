@@ -24,3 +24,14 @@ a {
     background: black;
   }
 }
+
+.flexbox-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.grayscale {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}

@@ -7,9 +7,9 @@ import Footer from "../components/Footer";
 import CardsApp from "../components/CardsApp";
 
 export default function Home({
-  playedCards,
+  playedCardsData,
+  allCardsData,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log(playedCards);
   return (
     <div>
       <Head>
@@ -19,18 +19,26 @@ export default function Home({
       </Head>
 
       <Header />
-      <CardsApp playedCards={playedCards.results} />
+      <CardsApp
+        playedCards={playedCardsData.results}
+        allCards={allCardsData.data}
+      />
       <Footer />
     </div>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await ky(`${process.env.NEXT_PUBLIC_HOST}/api/cards/`);
-  const playedCards: Card[] = await res.json();
+  let res = await ky(`${process.env.NEXT_PUBLIC_HOST}/api/cards/`);
+  const playedCardsData: Card[] = await res.json();
+  res = await ky(
+    `https://api.pokemontcg.io/v2/cards?q=set.ptcgoCode:"BS"&select=name,number,images,set`
+  );
+  const allCardsData: Card[] = await res.json();
   return {
     props: {
-      playedCards,
+      playedCardsData,
+      allCardsData,
     },
   };
 };

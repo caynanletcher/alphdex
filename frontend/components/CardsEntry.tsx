@@ -3,26 +3,47 @@ import Image from "next/image";
 const CardsEntry = ({
   name,
   imageUrl,
+  isPlayed,
 }: {
   name: string;
   imageUrl?: string;
+  isPlayed: boolean;
 }) => {
-  return imageUrl ? (
+  return (
     <>
-      <td>
-        <Image src={imageUrl} alt={name} width="100px" height="100px" />
-      </td>
-    </>
-  ) : (
-    <>
-      <td>
-        <Image
-          src={`/../public/cardback.png`}
-          alt={name}
-          width="100px"
-          height="100px"
-        />
-      </td>
+      {imageUrl ? (
+        isPlayed ? (
+          <div>
+            <Image
+              className="card-image"
+              src={imageUrl}
+              alt={name}
+              width="320px"
+              height="440px"
+            />
+          </div>
+        ) : (
+          <div>
+            <Image
+              className="card-image grayscale"
+              src={imageUrl}
+              alt={name}
+              width="320px"
+              height="440px"
+            />
+          </div>
+        )
+      ) : (
+        <div>
+          <Image
+            className="card-image"
+            src={"/cardback.png"}
+            alt={name}
+            width="320px"
+            height="440px"
+          />
+        </div>
+      )}
     </>
   );
 };

@@ -4,9 +4,6 @@ backend
 
 
 frontend
-- fix hydration error
-- filter by playedCards in CardsApp
-- layout cards in a proper grid (flexbox?)
 ---
 - implement tailwind css
 - make favicon
