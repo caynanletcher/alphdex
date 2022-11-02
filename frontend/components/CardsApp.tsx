@@ -8,11 +8,10 @@ const CardsApp = ({
   playedCards: Card[];
   allCards: any[];
 }) => {
-  const filterCards = (number: string, setName: string) => {
+  const filterCards = (number: string, setId: string) => {
     return playedCards.filter(
       (playedCard) =>
-        playedCard.number === parseInt(number) &&
-        playedCard.set.name === setName
+        playedCard.number === parseInt(number) && playedCard.set.code === setId
     );
   };
   let booledCards: Card[] = allCards.map((card, i) => {
@@ -21,9 +20,9 @@ const CardsApp = ({
       number: card.number,
       id: i,
       imageUrl: card.images.small,
-      isPlayed: filterCards(card.number, "Base Set").length !== 0,
+      isPlayed: filterCards(card.number, card.set.id).length !== 0,
       set: {
-        id: i,
+        id: card.set.id.toString(),
         name: card.set.name,
         code: card.set.id.toString(),
       },

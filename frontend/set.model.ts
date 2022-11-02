@@ -1,5 +1,6 @@
 export interface Set {
-  id: number;
+  id: string;
   name: string;
   code: string;
+  images?: any;
 }
