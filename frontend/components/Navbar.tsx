@@ -1,8 +1,15 @@
+import Link from "next/link";
+
 const Navbar = () => (
   <div>
-    <span>
-      <a href="sets">Sets</a>
-    </span>
+    <Link className="" href="/">
+      Alphdex
+    </Link>
+    <ul>
+      <li>
+        <Link href="/sets">Sets</Link>
+      </li>
+    </ul>
   </div>
 );
 export default Navbar;

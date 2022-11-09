@@ -18,7 +18,7 @@ export default function Sets({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <Header />
+      <h1>Sets</h1>
       <SetsApp sets={setsData.data.reverse()} />
       <Footer />
     </div>

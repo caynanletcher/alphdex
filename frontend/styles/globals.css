@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
@@ -34,4 +38,10 @@ a {
 .grayscale {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
+}
+
+.card-image {
+  border-radius: 4.75%/3.5%;
+  /* aspect-ratio: 734/1024; */
+  box-sizing: border-box;
 }

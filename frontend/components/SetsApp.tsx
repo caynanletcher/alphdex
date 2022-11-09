@@ -1,5 +1,6 @@
 import { Set } from "../set.model";
 import Image from "next/image";
+import Link from "next/link";
 
 const SetsApp = ({ sets }: { sets: Set[] }) => (
   <ul>
@@ -11,7 +12,7 @@ const SetsApp = ({ sets }: { sets: Set[] }) => (
           width="15px"
           height="15px"
         />
-        <a href={`set/${encodeURIComponent(set.id)}`}>{set.name}</a>
+        <Link href={`set/${encodeURIComponent(set.id)}`}>{set.name}</Link>
       </li>
     ))}
   </ul>

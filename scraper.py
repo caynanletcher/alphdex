@@ -1,7 +1,6 @@
 import requests
 import time
 import environ
-import re
 from bs4 import BeautifulSoup
 
 from selenium import webdriver
@@ -18,7 +17,7 @@ environ.Env.read_env('.env')
 username = env("ADMIN_USER")
 password = env("ADMIN_PASSWORD")
 
-CARDS_URL = 'http://127.0.0.1:8000/cards/'
+CARDS_URL = 'http://127.0.0.1:8000/api/cards/'
 
 class Scraper:
 
@@ -60,7 +59,7 @@ class Scraper:
                         'MT', 'SW', 'GE', 'MD', 'LA', 'SF', 'PL', 'RR', 'SV', 'AR', 'PR-NP',
                         'PR-DPP']
 
-  sets = requests.get('https://api.pokemontcg.io/v2/sets').json()
+  sets = requests.get('https://api.pokemontcg.io/v2/sets?q=legalities.standard:Legal').json()
   
   def scrape_tcgplayer_card(self, url, driver):
     driver.get(url)
@@ -190,8 +189,8 @@ class Scraper:
       self.scrape_jklacz_page(url)
 
   def scrape_all(self):
-    self.scrape_jklacz()
-    # self.scrape_limitless()
+    # self.scrape_jklacz()
+    self.scrape_limitless()
 
 
 scraper = Scraper()

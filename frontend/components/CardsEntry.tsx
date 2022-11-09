@@ -1,16 +1,19 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const CardsEntry = ({
   name,
+  slug,
   imageUrl,
   isPlayed,
 }: {
   name: string;
+  slug: string;
   imageUrl?: string;
   isPlayed: boolean;
 }) => {
   return (
-    <>
+    <Link href={`card/${slug}`}>
       {imageUrl ? (
         isPlayed ? (
           <div>
@@ -44,7 +47,7 @@ const CardsEntry = ({
           />
         </div>
       )}
-    </>
+    </Link>
   );
 };
 export default CardsEntry;

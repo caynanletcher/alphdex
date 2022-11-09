@@ -29,7 +29,6 @@ const CardsApp = ({
     };
     return booledCard;
   });
-  console.log(booledCards);
   return (
     <>
       <CardsTable cards={booledCards} />
