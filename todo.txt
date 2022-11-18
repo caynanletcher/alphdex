@@ -8,3 +8,4 @@ frontend
 - implement tailwind css
 - make favicon
 - remove 'any' types
+- find a way to find all card paths without overloading the api

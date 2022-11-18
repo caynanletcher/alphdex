@@ -10,7 +10,7 @@ class CardSerializer(serializers.HyperlinkedModelSerializer):
 
   class Meta:
     model = Card
-    fields = ['name', 'number', 'set']
+    fields = ['name', 'number', 'set', 'slug']
     validators = [
       serializers.UniqueTogetherValidator(
         queryset=Card.objects.all(),

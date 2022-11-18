@@ -5,6 +5,7 @@ export interface Card {
   name: string;
   number: number;
   set: Set;
+  slug: string;
   imageUrl?: string;
   isPlayed: boolean;
 }

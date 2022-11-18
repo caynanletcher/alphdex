@@ -13,7 +13,7 @@ const CardsEntry = ({
   isPlayed: boolean;
 }) => {
   return (
-    <Link href={`card/${slug}`}>
+    <Link href={`../card/${slug}`}>
       {imageUrl ? (
         isPlayed ? (
           <div>

@@ -1,3 +1,4 @@
+import slugify from "slugify";
 import { Card } from "../card.model";
 import CardsTable from "./CardsTable";
 
@@ -21,6 +22,9 @@ const CardsApp = ({
       id: i,
       imageUrl: card.images.small,
       isPlayed: filterCards(card.number, card.set.id).length !== 0,
+      slug: slugify(`${card.name}-${card.set.name}-${card.number}`, {
+        lower: true,
+      }),
       set: {
         id: card.set.id.toString(),
         name: card.set.name,

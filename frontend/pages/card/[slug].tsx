@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 import CardApp from "../../components/CardApp";
+import slugify from "slugify";
 
 export default function CardsPage({
   playedCardsData,
@@ -26,26 +27,40 @@ export default function CardsPage({
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async (context) => {
   // When this is true (in preview environments) don't
   // prerender any static pages
   // (faster builds, but slower initial page load)
-  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+  if (process.env.SKIP_BUILD_STATIC_GENERATION === "1") {
     return {
       paths: [],
       fallback: "blocking",
     };
   }
 
-  const res = await ky(
-    `https://api.pokemontcg.io/v2/cards?select=name,number,set&q=name:${cardName} number:${number} set.id:${setId}`
+  let res = await ky(
+    `https://api.pokemontcg.io/v2/cards?select=name,number,set`
   );
   const cardData: any = await res.json();
-  const card: Card[] = cardData.data;
+  for (let i = 1; i <= cardData.pageSize; i++) {
+    let res = await ky(
+      `https://api.pokemontcg.io/v2/cards?select=name,number,set&page=${i}`
+    );
+    const cardData: any = await res.json();
+  }
 
-  const paths = card.map((card: Card) => ({
-    params: { id: card.id },
-  }));
+  const paths = cardData.data.map((card: Card) => {
+    const parseSlug = encodeURIComponent(
+      slugify(`${card.name}-${card.set.name}-${card.number}`, {
+        lower: true,
+      })
+    );
+    return {
+      params: {
+        slug: parseSlug,
+      },
+    };
+  });
 
   // { fallback: false } means other routes should 404
   return { paths, fallback: false };
