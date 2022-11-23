@@ -42,12 +42,12 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
     `https://api.pokemontcg.io/v2/cards?select=name,number,set`
   );
   const cardData: any = await res.json();
-  for (let i = 1; i <= cardData.pageSize; i++) {
-    let res = await ky(
-      `https://api.pokemontcg.io/v2/cards?select=name,number,set&page=${i}`
-    );
-    const cardData: any = await res.json();
-  }
+  // for (let i = 1; i <= cardData.pageSize; i++) {
+  //   let res = await ky(
+  //     `https://api.pokemontcg.io/v2/cards?select=name,number,set&page=${i}`
+  //   );
+  //   const cardData: any = await res.json();
+  // }
 
   const paths = cardData.data.map((card: Card) => {
     const parseSlug = encodeURIComponent(

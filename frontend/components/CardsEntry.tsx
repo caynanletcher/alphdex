@@ -13,7 +13,7 @@ const CardsEntry = ({
   isPlayed: boolean;
 }) => {
   return (
-    <Link href={`../card/${slug}`}>
+    <a href={`../card/${slug}`} className="m-2">
       {imageUrl ? (
         isPlayed ? (
           <div>
@@ -47,7 +47,7 @@ const CardsEntry = ({
           />
         </div>
       )}
-    </Link>
+    </a>
   );
 };
 export default CardsEntry;
