@@ -5,6 +5,7 @@ from rest_framework import serializers
 class SetSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100, allow_blank=True, required=False)
     code = serializers.CharField(max_length=20, allow_blank=True, required=False)
+    slug = serializers.CharField(max_length=100, allow_blank=True, required=False)
 
     def create(self, validated_data):
         return Set.objects.create(**validated_data)

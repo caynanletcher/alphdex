@@ -3,4 +3,5 @@ export interface Set {
   name: string;
   code: string;
   images?: any;
+  slug: string;
 }

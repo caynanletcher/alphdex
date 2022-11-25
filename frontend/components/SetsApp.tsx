@@ -1,6 +1,7 @@
 import { Set } from "../set.model";
 import Image from "next/image";
 import Link from "next/link";
+import slugify from "slugify";
 
 const SetsApp = ({ sets }: { sets: Set[] }) => (
   <ul>
@@ -18,7 +19,12 @@ const SetsApp = ({ sets }: { sets: Set[] }) => (
             className=""
           />
         </span>
-        <a href={`set/${encodeURIComponent(set.id)}`} className="ml-1">
+        <a
+          href={`set/${slugify(`${set.name}-${set.id}}`, {
+            lower: true,
+          })}`}
+          className="ml-1"
+        >
           {set.name}
         </a>
       </li>

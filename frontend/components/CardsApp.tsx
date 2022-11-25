@@ -29,6 +29,9 @@ const CardsApp = ({
         id: card.set.id.toString(),
         name: card.set.name,
         code: card.set.id.toString(),
+        slug: slugify(`${card.set.name}-${card.set.id}}`, {
+          lower: true,
+        }),
       },
     };
     return booledCard;

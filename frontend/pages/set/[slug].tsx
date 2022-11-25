@@ -3,7 +3,7 @@ import ky from "ky-universal";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { Card } from "../../card.model";
 import { Set } from "../../set.model";
-import Header from "../../components/Header";
+
 import Footer from "../../components/Footer";
 import CardsApp from "../../components/CardsApp";
 import Navbar from "../../components/Navbar";
@@ -13,7 +13,6 @@ export default function CardsPage({
   allCardsData,
   set,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log(set);
   return (
     <div className="antialiased">
       <Head>
@@ -47,35 +46,37 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
   }
 
-  const res = await ky(`https://api.pokemontcg.io/v2/sets?select=id,name`);
-  let setsData: any = await res.json();
-  for (let i = 1; i <= setsData.pageSize; i++) {
-    let res = await ky(
-      `https://api.pokemontcg.io/v2/cards?select=name,number,set&page=${i}`
-    );
-    let newSetsData: any = await res.json();
-    setsData.data.push(newSetsData.data);
-  }
+  const APIRes = await ky(`https://api.pokemontcg.io/v2/sets?select=id,name`);
+  let APISetsData: any = await APIRes.json();
 
-  const paths = setsData.data.map((set: Set) => ({
-    params: { id: set.id },
-  }));
+  const paths = APISetsData.data.map(async (set: Set) => {
+    let res = await ky(
+      `${process.env.NEXT_PUBLIC_HOST}/api/sets/?code=${set.id}`
+    );
+    let localSetData: any = await res.json();
+    return {
+      params: { slug: localSetData.results[0].slug },
+    };
+  });
 
   // { fallback: false } means other routes should 404
   return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async (context: any) => {
+  const regex = /\w+$/g;
+  const setId = context.params.slug.match(regex);
+  console.log("SET ID: " + setId);
   let res = await ky(
-    `${process.env.NEXT_PUBLIC_HOST}/api/cards/?set__code=${context.params.id}`
+    `${process.env.NEXT_PUBLIC_HOST}/api/cards/?set__code=${setId}`
   );
   const playedCardsData: Card[] = await res.json();
   res = await ky(
-    `https://api.pokemontcg.io/v2/cards?q=set.id:"${context.params.id}"&select=name,number,images,set`
+    `https://api.pokemontcg.io/v2/cards?q=set.id:"${setId}"&select=name,number,images,set`
   );
   const allCardsData: Card[] = await res.json();
   const set = await ky(
-    `https://api.pokemontcg.io/v2/sets?q=id:${context.params.id}&select=name`
+    `https://api.pokemontcg.io/v2/sets?q=id:"${setId}"&select=name`
   ).json();
   return {
     props: {
