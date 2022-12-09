@@ -160,7 +160,7 @@ class Scraper:
           
           for i in range(set['total']):
             try:
-              self.scrape_limitlesstcg_page(f'https://limitlesstcg.com/cards/{ptcgoCode}/{i}', set['name'])
+              self.scrape_limitlesstcg_page(f'https://limitlesstcg.com/cards/{ptcgoCode}/{i + 1}', set['name'])
             except:
               print(f'Card #{i} not found in set {ptcgoCode}.')
         else:
