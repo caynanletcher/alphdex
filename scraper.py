@@ -59,7 +59,7 @@ class Scraper:
                         'MT', 'SW', 'GE', 'MD', 'LA', 'SF', 'PL', 'RR', 'SV', 'AR', 'PR-NP',
                         'PR-DPP']
 
-  sets = requests.get('https://api.pokemontcg.io/v2/sets?q=legalities.standard:Legal').json()
+  sets = requests.get('https://api.pokemontcg.io/v2/sets?q=legalities.standard:Legal&orderBy=-releaseDate').json()
   
   def scrape_tcgplayer_card(self, url, driver):
     driver.get(url)

@@ -18,6 +18,10 @@ const Navbar = () => (
           <a href="/" className="mx-2 hidden lg:flex">
             ALPHDEX
           </a>
+          {/* <form className="flex m-auto justify-center align-middle items-center text-left rounded-lg space-x-3 px-4 h-12 bg-orange-100 ring-1">
+            <label>?</label>
+            <input type="search" className="bg-orange-100" />
+          </form> */}
           <div className="relative items-center ml-auto">
             <nav className="text-sm lg:text-base leading-6 font-semibold">
               <ul className="flex space-x-8">
