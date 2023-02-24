@@ -7,3 +7,13 @@ frontend
 ---
 - remove 'any' types
 - find a way to find all card paths without overloading the api
+
+
+2.0 build notes:
+- store all cards, not just played ones
+  - add 'played in tournament' boolean field
+  - save cards from pokemontcgapi
+  - periodically update data model from updates to pokemontcgapi
+  - find out how to properly get tournament data to store decklists
+  - make a decklists creator, simulator?
+  - collection tracker (users)
